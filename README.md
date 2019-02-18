@@ -18,7 +18,7 @@ The file for the import is located into the data folder of this repository.
 psql -h <db_host> -p <port> -U <user> -d seminar -d seminar -f seminardb.sql
 ```
 
-
+The error "psql:seminardb.sql:60006: ERROR:  insert or update on table "geometries" violates foreign key constraint "geometries_uic_ref_fkey" can be ignored.
 
 
 
