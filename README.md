@@ -1,6 +1,12 @@
 # Database as a Web Service
 Link to the wiki page: https://wiki.hsr.ch/Datenbanken/wiki.cgi?SeminarDatenbanksystemeFS19
 
+## Queries
+The queries used for the benchmark are listed in the queries.sql in the queries folder.
+
+To get information about the execution time use the \timing command.
+Further, the execution plan can be seen if you use the keyword EXPLAIN before a query.
+
 ## Data Import
 To import the data into PostgreSQL create a database called seminar.
 
