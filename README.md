@@ -22,12 +22,12 @@ CREATE DATABASE dvdrental;
 After the creation of the databases you can import the data.
 The database dumps can be downloaded from:
   * Seminar DB: https://drive.switch.ch/index.php/s/EJ0YNfjARSG6Ed8
-  * DVD Rental:
+  * DVD Rental: https://drive.switch.ch/index.php/s/ep22fz47oTF3QS3
 
-The file for the imports are located into the didok and sakila folder of this repository.
-
+To import the data into PostgreSQL use the following commands.
 ```bash
-psql -h <db_host> -p <port> -U <user> -d seminar -d seminar -f seminardb.sql
+psql -h <db_host> -p <port> -U <user> -d seminar -f seminardb.sql
+psql -h <db_host> -p <port> -U <user> -d dvdrental -f dvdrentaldb.sql
 ```
 
 The error "psql:seminardb.sql:60006: ERROR:  insert or update on table "geometries" violates foreign key constraint "geometries_uic_ref_fkey" can be ignored.
