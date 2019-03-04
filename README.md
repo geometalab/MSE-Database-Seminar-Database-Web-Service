@@ -15,10 +15,16 @@ For example, you can connect to your PostgreSQL server as follows and create the
 ```bash
 psql -h <db_host> -p <port> -U <user>
 CREATE DATABASE seminar;
+CREATE DATABASE dvdrental;
 ```
 
-After the creation of the database you can import the data.
-The file for the import is located into the data folder of this repository.
+
+After the creation of the databases you can import the data.
+The database dumps can be downloaded from:
+  * Seminar DB: https://drive.switch.ch/index.php/s/EJ0YNfjARSG6Ed8
+  * DVD Rental:
+
+The file for the imports are located into the didok and sakila folder of this repository.
 
 ```bash
 psql -h <db_host> -p <port> -U <user> -d seminar -d seminar -f seminardb.sql
