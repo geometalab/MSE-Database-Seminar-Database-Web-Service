@@ -28,7 +28,7 @@ Delete bad rows: sed -i "24375d" geomexport.csv
 
 ### Dump
 ```bash
-docker exec geom-postgis pg_dump -U postgres seminar > didok.sql
+docker exec geom-postgis pg_dump -U postgres seminar > seminardb.sql
 psql -h 172.17.02 -p 5432 -U postgres -d seminar -d seminar -f didok.sql
 ```
 

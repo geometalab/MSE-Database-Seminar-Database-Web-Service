@@ -41,29 +41,21 @@ CREATE TABLE didok(
 CREATE TABLE osm_point(
   osm_id BIGINT,
   name TEXT,
-  way geometry(Point,3857),
+  geom geometry(Point,3857),
   tags hstore
 );
 
 CREATE TABLE osm_line(
   osm_id BIGINT,
   name TEXT,
-  way geometry(LineString,3857),
+  geom geometry(LineString,3857),
   tags hstore
 );
-
-CREATE TABLE osm_line(
-  osm_id BIGINT,
-  name TEXT,
-  way geometry(LineString,3857),
-  tags hstore
-);
-
 
 CREATE TABLE osm_polygon(
   osm_id BIGINT,
   name TEXT,
-  way geometry(Geometry,3857),
+  geom geometry(Geometry,3857),
   tags hstore
 );
 

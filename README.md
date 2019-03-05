@@ -21,7 +21,7 @@ CREATE DATABASE dvdrental;
 
 After the creation of the databases you can import the data.
 The database dumps can be downloaded from:
-  * Seminar DB: https://drive.switch.ch/index.php/s/EJ0YNfjARSG6Ed8
+  * Seminar DB: https://drive.switch.ch/index.php/s/2o60SIBuPkVdS6Q
   * DVD Rental: https://drive.switch.ch/index.php/s/ep22fz47oTF3QS3
 
 To import the data into PostgreSQL use the following commands.
