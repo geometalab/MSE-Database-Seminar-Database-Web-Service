@@ -2,7 +2,7 @@ CREATE EXTENSION postgis;
 CREATE EXTENSION hstore;
 CREATE EXTENSION dblink;
 
-CREATE DATABASE seminar;
+CREATE DATABASE eosm_ch;
 
 CREATE TABLE osm_stops(
   geom geometry(Point,3857),

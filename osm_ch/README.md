@@ -20,16 +20,16 @@ WHERE (tags->'uic_ref') IS NOT NULL
 
 ### Import
 ```bash
-psql -h 172.17.02 -p 5432 -U postgres -d seminar -c "\COPY geometries(geom,name,osm_id,uic_ref) FROM 'geomexport.csv' DELIMITER ',' CSV HEADER;"
-psql -h 172.17.02 -p 5432 -U postgres -d seminar -c "\COPY didok(uic_ref, ld, dst_nr, kz, name, laenge, namel, dst_abk, go_nr, go_abk, gde_nr, gemeinde, kt, bp, vp, vg, vd, y_koord, x_koord, hoehe, karte1, karte2) FROM 'didok.csv' DELIMITER ',' CSV HEADER;"
+psql -h 172.17.02 -p 5432 -U postgres -d eosm_ch -c "\COPY geometries(geom,name,osm_id,uic_ref) FROM 'geomexport.csv' DELIMITER ',' CSV HEADER;"
+psql -h 172.17.02 -p 5432 -U postgres -d eosm_ch -c "\COPY didok(uic_ref, ld, dst_nr, kz, name, laenge, namel, dst_abk, go_nr, go_abk, gde_nr, gemeinde, kt, bp, vp, vg, vd, y_koord, x_koord, hoehe, karte1, karte2) FROM 'didok.csv' DELIMITER ',' CSV HEADER;"
 ```
 Find bad rows: grep -n "Bern Brünnen Westside" geomexport.csv
 Delete bad rows: sed -i "24375d" geomexport.csv
 
 ### Dump
 ```bash
-docker exec geom-postgis pg_dump -U postgres seminar > seminardb.sql
-psql -h 172.17.02 -p 5432 -U postgres -d seminar -d seminar -f didok.sql
+docker exec geom-postgis pg_dump -U postgres eosm_ch > eosm_chdb.sql
+psql -h 172.17.02 -p 5432 -U postgres -d eosm_ch -d eosm_ch -f didok.sql
 ```
 
 
