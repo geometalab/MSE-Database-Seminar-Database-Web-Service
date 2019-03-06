@@ -1,0 +1,50 @@
+HASURA Query Examples
+
+--- QUERY 3 --- Stations in Walenstadt (Bounding Box)
+SELECT didok.name,
+       ST_AsText(osm_stops.geom) AS location
+FROM didok
+INNER JOIN osm_stops ON didok.uic_ref = osm_stops.uic_ref
+WHERE ST_Intersects(ST_MakeEnvelope(1034818, 5960244, 1040199, 5964068, 3857),geom:: GEOMETRY);
+
+-- Alternative Query 3 --
+    SELECT
+        didok.name,
+        ST_AsText(osm_stops.geom) AS location
+    FROM didok
+    INNER JOIN osm_stops ON didok.uic_ref = osm_stops.uic_ref
+    WHERE ST_Within(
+            osm_stops.geom,
+            ST_GeomFromText(
+                'MULTIPOLYGON((
+                      (1034818 5960244, 1040199 5960244, 1040199 5964068, 1034818 5964068, 1034818 5960244)
+                    ))', 3857)
+                    );
+
+
+--- GRAPHQL QUERY 3 ---
+-- QUERY VARIABLES --
+
+{
+  "polygon": {
+    "type": "Polygon",
+    "coordinates": [[
+        [ 1034818, 5960244],
+        [ 1040199, 5960244],
+        [ 1040199, 5964068],
+        [ 1034818, 5964068],
+        [ 1034818, 5960244]
+    ]],
+    "crs":{"type":"name","properties":{"name":"EPSG:3857"}}
+  }
+}
+
+-- QUERY --
+query query3($polygon: geometry) {
+  osm_stops(where: {geom: {_st_within: $polygon}}) {
+    geom
+    didokByuicRef{
+      name
+    }
+  }
+}   
