@@ -28,8 +28,9 @@ Delete bad rows: sed -i "24375d" geomexport.csv
 
 ### Dump
 ```bash
-docker exec geom-postgis pg_dump -U postgres eosm_ch > eosm_chdb.sql
-psql -h 172.17.02 -p 5432 -U postgres -d eosm_ch -d eosm_ch -f didok.sql
+docker exec geom-postgis pg_dump -U postgres eosm_ch > eosm_ch.sql
+docker exec geom-postgis pg_dump -U postgres sakila > sakila.sql
+psql -h 172.17.02 -p 5432 -U postgres -d eosm_ch -d eosm_ch -f eosm_ch.sql
 ```
 
 
@@ -46,7 +47,23 @@ psql -h 172.17.02 -p 5432 -U postgres
 INSERT INTO osm_point select * from dblink('host=152.96.80.44 port=8080 user=*** password=*** dbname=gis_db', 'select osm_id, name, way, tags from osm_point') tt(osm_id bigint, name text, way geometry(Point,3857), tags hstore);
 INSERT INTO osm_line select * from dblink('host=152.96.80.44 port=8080 user=*** password=*** dbname=gis_db', 'select osm_id, name, way, tags from osm_line') tt(osm_id bigint, name text, way geometry(LineString,3857), tags hstore);
 INSERT INTO osm_polygon select * from dblink('host=152.96.80.44 port=8080 user=*** password=*** dbname=gis_db', 'select osm_id, name, way, tags from osm_polygon') tt(osm_id bigint, name text, way geometry(Geometry,3857), tags hstore);
+
+INSERT INTO osm_point select * from dblink('host=152.96.80.44 port=8080 user=*** password=*** dbname=gis_db', 'select osm_id, name, way, tags from osm_point WHERE ST_Within(way,
+    (SELECT way FROM osm_polygon WHERE osm_id=-51701))') tt(osm_id bigint, name text, geom geometry(Point,3857), tags hstore);
+
+INSERT INTO osm_line select * from dblink('host=152.96.80.41 port=8080 user=*** password=*** dbname=gis_db', 'select osm_id, name, way, tags from osm_line WHERE ST_Within(way,
+    (SELECT ST_RemoveRepeatedPoints(way, 100.0) FROM osm_polygon WHERE osm_id=-51701))') tt(osm_id bigint, name text, geom geometry(LineString,3857), tags hstore);
 ```
 
 
+### Alter SRID
+```bash
+SELECT UpdateGeometrySRID('osm_point','geom',4326);
+```
 
+
+### Alter Text (with ,) to Numberic
+```bash
+ALTER TABLE didok_stops
+ALTER COLUMN x_koord TYPE numeric USING translate(x_koord, ',', '.')::numeric;
+```
