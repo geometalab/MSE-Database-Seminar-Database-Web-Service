@@ -67,3 +67,12 @@ SELECT UpdateGeometrySRID('osm_point','geom',4326);
 ALTER TABLE didok_stops
 ALTER COLUMN x_koord TYPE numeric USING translate(x_koord, ',', '.')::numeric;
 ```
+
+
+### Geometry to Geography
+http://postgis.net/workshops/postgis-intro/geography.html
+```bash
+ALTER TABLE osm_point
+ ALTER COLUMN geom type GEOGRAPHY(POINT)
+ USING (geom);
+```

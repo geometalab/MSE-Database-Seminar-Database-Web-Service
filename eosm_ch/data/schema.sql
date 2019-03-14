@@ -41,21 +41,21 @@ CREATE TABLE didok_stops(
 CREATE TABLE osm_point(
   osm_id BIGINT,
   name TEXT,
-  geom geometry(Point, 4326),
+  geom geography(Point, 4326),
   tags hstore
 );
 
 CREATE TABLE osm_line(
   osm_id BIGINT,
   name TEXT,
-  geom geometry(LineString, 4326),
+  geom geography(LineString, 4326),
   tags hstore
 );
 
 CREATE TABLE osm_polygon(
   osm_id BIGINT,
   name TEXT,
-  geom geometry(Geometry, 4326),
+  geom geography(Geometry, 4326),
   tags hstore
 );
 
