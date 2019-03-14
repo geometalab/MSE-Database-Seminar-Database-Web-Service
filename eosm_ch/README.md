@@ -59,6 +59,7 @@ INSERT INTO osm_line select * from dblink('host=152.96.80.41 port=8080 user=*** 
 ### Alter SRID
 ```bash
 SELECT UpdateGeometrySRID('osm_point','geom',4326);
+SELECT UpdateGeometrySRID('osm_point','geom',3857);
 ```
 
 
@@ -72,7 +73,11 @@ ALTER COLUMN x_koord TYPE numeric USING translate(x_koord, ',', '.')::numeric;
 ### Geometry to Geography
 http://postgis.net/workshops/postgis-intro/geography.html
 ```bash
+ALTER TABLE osm_stops
+ALTER COLUMN geom type GEOGRAPHY(POINT)
+USING (ST_Transform(geom,4326));
+
 ALTER TABLE osm_point
- ALTER COLUMN geom type GEOGRAPHY(POINT)
- USING (geom);
+ALTER COLUMN geom type GEOGRAPHY(POINT)
+USING (ST_Transform(geom,4326));
 ```

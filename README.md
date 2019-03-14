@@ -21,7 +21,7 @@ CREATE DATABASE sakila;
 
 After the creation of the databases you can import the data.
 The database dumps can be downloaded from:
-  * eosm_ch: https://drive.switch.ch/index.php/s/pNGIAVCfYmGsKjU
+  * eosm_ch: https://drive.switch.ch/index.php/s/GmghfzyjLm3BwQP
   * sakila: https://drive.switch.ch/index.php/s/LMnvH1fJlJvygHG
 
 To import the data into PostgreSQL use the following commands.

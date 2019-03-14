@@ -37,7 +37,7 @@ ORDER BY name;
 SELECT didok_stops.name, ST_AsText(osm_stops.geom) AS geom
 FROM didok_stops
 INNER JOIN osm_stops ON didok_stops.uic_ref = osm_stops.uic_ref
-WHERE ST_Intersects(ST_MakeEnvelope(1034818, 5960244, 1040199, 5964068, 3857),geom:: GEOMETRY)
+WHERE ST_Intersects(ST_MakeEnvelope(9.294699,47.110339,9.333789,47.132881, 4326),geom:: GEOMETRY)
 ORDER BY 1;
 --> 3 rows...
 
@@ -140,11 +140,11 @@ all_counts;
 SELECT
   osm_id, 
   name, 
-  ST_AsText(ST_Transform(geom,4326),5) AS geom 
+  ST_AsText(geom) AS geom
 FROM
   osm_point
 WHERE 
-  ST_DWithin(ST_Transform(ST_GeomFromText('POINT(8.81652 47.22679)',4326),3857), geom, 15)
+  ST_DWithin(ST_GeomFromText('POINT(8.81652 47.22679)',4326), geom, 15)
 ORDER BY name;
 --> 4280011859|"Jakob"|"POINT(8.81651 47.22679)"
 --> 1355269682|"Jakob Hotel am Hauptplatz"|"POINT(8.8165 47.22685)"
