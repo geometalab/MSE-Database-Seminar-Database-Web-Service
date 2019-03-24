@@ -12,9 +12,7 @@ AND ST_Within(way, (SELECT way FROM osm_polygon WHERE osm_id=-51701))
 Note this optimized, faster query:
 ```sql
 WITH ch AS ( 
-  SELECT ST_Simplify(way,5) AS geom 
-  FROM osm_polygon 
-  WHERE osm_id=-51701
+  SELECT ST_Simplify(way,5) AS way FROM osm_polygon WHERE osm_id=-51701
 )
 SELECT ST_AsText(way) AS geom, name, osm_id, (tags->'uic_ref') AS uic_ref
 FROM osm_poi
