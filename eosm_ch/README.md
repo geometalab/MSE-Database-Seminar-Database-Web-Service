@@ -1,20 +1,34 @@
 # Data Preparation
 OSM id Switzerland: 51701
 
+
 ### SELECT
-```bash
+```sql
 SELECT ST_AsText(way) AS geom, name, osm_id, (tags->'uic_ref') AS uic_ref
 FROM osm_poi
-WHERE (tags->'uic_ref') IS NOT NULL AND ST_Within(way,
-    (SELECT way FROM osm_polygon WHERE osm_id=-51701))
+WHERE (tags->'uic_ref') IS NOT NULL 
+AND ST_Within(way, (SELECT way FROM osm_polygon WHERE osm_id=-51701))
 ```
+Note this optimized, faster query:
+```sql
+WITH ch AS ( 
+  SELECT ST_Simplify(way,5) AS geom 
+  FROM osm_polygon 
+  WHERE osm_id=-51701
+)
+SELECT ST_AsText(way) AS geom, name, osm_id, (tags->'uic_ref') AS uic_ref
+FROM osm_poi
+WHERE (tags->'uic_ref') IS NOT NULL  
+AND ST_Within(way, (SELECT way FROM ch))
+```
+
 
 ### Export
 ```bash
 psql -h sifs-80044 -p 8080 -U readonly -d gis_db -c "\COPY (SELECT way AS geom, name, osm_id, (tags->'uic_ref') AS uic_ref
 FROM osm_poi
-WHERE (tags->'uic_ref') IS NOT NULL
-  AND ST_Within(way,(SELECT way FROM osm_polygon WHERE osm_id=-51701))) TO 'geomexport.csv' CSV HEADER DELIMITER ',';"
+WHERE (tags->'uic_ref') IS NOT NULL 
+AND ST_Within(way,(SELECT way FROM osm_polygon WHERE osm_id=-51701))) TO 'geomexport.csv' CSV HEADER DELIMITER ',';"
 ```
 
 
@@ -25,6 +39,7 @@ psql -h 172.17.02 -p 5432 -U postgres -d eosm_ch -c "\COPY didok(uic_ref, ld, ds
 ```
 Find bad rows: grep -n "Bern Brünnen Westside" geomexport.csv
 Delete bad rows: sed -i "24375d" geomexport.csv
+
 
 ### Dump
 ```bash
