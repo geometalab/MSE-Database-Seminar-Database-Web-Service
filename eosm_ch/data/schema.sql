@@ -8,7 +8,7 @@ CREATE TABLE osm_stops(
   geom geography(Point, 4326),
   name TEXT,
   osm_id BIGINT,
-  uic_ref BIGINT REFERENCES didok(uic_ref)
+  uic_ref BIGINT REFERENCES didok_stops(uic_ref)
 );
 
 CREATE TABLE didok_stops(
