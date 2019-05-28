@@ -23,8 +23,8 @@ INNER JOIN osm_stops ON didok_stops.uic_ref = osm_stops.uic_ref;
 
 --- QUERY 2 - List first 100 Didok stations matching stations in OSM.
 SELECT did.uic_ref,
-       did.name,
-       osm.name,
+       did.name AS didName,
+       osm.name as OSMName,
        did.y_koord AS easting,
        did.x_koord AS northing,
        st_astext(st_transform(osm.geom::geometry,21781),0) as geom_wkt, -- 0 decimal places
